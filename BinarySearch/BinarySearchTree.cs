@@ -18,7 +18,7 @@ namespace BinarySearch
             {
                 root = node;
             }
-            else if (node.data.CompareTo(root.data) > 0)
+            else if (node.data.CompareTo(root.data) < 0)
             {
                 if (root.rightChild == null)
                 {
@@ -30,7 +30,7 @@ namespace BinarySearch
                     return;
                 }
             }
-            else if (node.data.CompareTo(root.data) < 0)
+            else if (node.data.CompareTo(root.data) > 0)
             {
                 if (root.leftChild == null)
                 {
@@ -49,7 +49,7 @@ namespace BinarySearch
             {
                 check = node;
             }
-            else if (node.data.CompareTo(check.data) > 0)
+            else if (node.data.CompareTo(check.data) < 0)
             {
                 if (check.rightChild == null)
                 {
@@ -61,7 +61,7 @@ namespace BinarySearch
                     return;
                 }
             }
-            else if (node.data.CompareTo(check.data) < 0)
+            else if (node.data.CompareTo(check.data) > 0)
             {
                 if (check.leftChild == null)
                 {
@@ -72,6 +72,71 @@ namespace BinarySearch
                     AddNode(node, check.leftChild);
                     return;
                 }
+            }
+        }
+        public void Display()
+        {
+            Display(root, 0);
+            Console.WriteLine();
+        }
+        public void Display(Node<T> node, int level)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            Display(node.rightChild, level + 1);
+            Console.WriteLine();
+
+            for (int i = 0; i < level; i++)
+            {
+                Console.Write("    ");
+            }
+            Console.Write(node.data);
+
+            Display(node.leftChild, level + 1);
+        }
+        public bool Search(T item)
+        {
+            if (root == null)
+            {
+                return false;
+            }
+            else if (root.data.CompareTo(item) == 0)
+            {
+                return true;
+            }
+            else if (item.CompareTo(root.data) < 0 && root.rightChild != null)
+            {
+                return Search(item, root.rightChild);
+            }
+            else if (item.CompareTo(root.data) > 0 && root.leftChild != null)
+            {
+                return Search(item, root.leftChild);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool Search(T item, Node<T> check)
+        { 
+            if (check.data.CompareTo(item) == 0)
+            {
+                return true;
+            }
+            else if (item.CompareTo(check.data) < 0 && check.rightChild != null)
+            {
+                return Search(item, check.rightChild);
+            }
+            else if (item.CompareTo(check.data) > 0 && check.leftChild != null)
+            {
+                return Search(item, check.leftChild);
+            }
+            else
+            {
+                return false;
             }
         }
     }
